@@ -1,4 +1,4 @@
-module github.com/nbcx/go-kit
+module github.com/nbcx/kit
 
 go 1.23
 
