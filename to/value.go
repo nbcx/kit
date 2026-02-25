@@ -301,6 +301,50 @@ func (s *Value) IntsE() ([]int, error) {
 	return values, nil
 }
 
+func (s *Value) Values() (values []*Value) {
+	anys, ok := s.v.([]any)
+	if ok {
+		for _, v := range anys {
+			values = append(values, V(v))
+		}
+	}
+	return
+}
+
+func (s *Value) ValuesE() (values []*Value, err error) {
+	anys, ok := s.v.([]any)
+	if ok {
+		for _, v := range anys {
+			values = append(values, V(v))
+		}
+		return
+	}
+	return nil, fmt.Errorf("cant get []*Value")
+}
+
+func (s *Value) ValueM() map[string]*Value {
+	m := map[string]*Value{}
+	anyM, ok := s.v.(map[string]any)
+	if ok {
+		for k, v := range anyM {
+			m[k] = V(v)
+		}
+	}
+	return m
+}
+
+func (s *Value) ValueME() (map[string]*Value, error) {
+	m := map[string]*Value{}
+	anyM, ok := s.v.(map[string]any)
+	if ok {
+		for k, v := range anyM {
+			m[k] = V(v)
+		}
+		return m, nil
+	}
+	return m, fmt.Errorf("cant get map[string]*Value")
+}
+
 type Values[T any] []T
 
 func Vs[T any](v []T) Values[T] {
